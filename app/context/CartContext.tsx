@@ -1,20 +1,21 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from "react";
+import { Product } from "../types/product";
 
 interface CartContextType {
-  cart: any[];
-  addToCart: (product: any) => void;
+  cart: Product[];
+  addToCart: (item: Product) => void;
 }
 
-export const CartContext = createContext<CartContextType | null>(null);
+export const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState<any[]>([]);
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [cart, setCart] = useState<Product[]>([]);
 
-  function addToCart(product: any) {
-    setCart((prev) => [...prev, product]);
-  }
+  const addToCart = (item: Product) => {
+    setCart((prev) => [...prev, item]);
+  };
 
   return (
     <CartContext.Provider value={{ cart, addToCart }}>

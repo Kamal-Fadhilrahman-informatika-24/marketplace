@@ -2,8 +2,9 @@
 
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { Product } from "../../types/product";
 
-export default function AddToCartButton({ product }: any) {
+export default function AddToCartButton({ product }: { product: Product }) {
   const context = useContext(CartContext);
   if (!context) return null;
 

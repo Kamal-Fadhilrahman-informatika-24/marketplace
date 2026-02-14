@@ -10,12 +10,12 @@ async function getProduct(id: string) {
     if (!res.ok) throw new Error("Fetch gagal");
 
     return res.json();
-  } catch (err) {
+  } catch {
     return null;
   }
 }
 
-export default async function ProductPage({ params }: any) {
+export default async function ProductPage({ params }: { params: { id: string } }) {
   const product = await getProduct(params.id);
 
   if (!product) {

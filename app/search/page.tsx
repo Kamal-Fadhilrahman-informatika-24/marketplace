@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Product } from "../types/product";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
-  const [allProducts, setAllProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch sekali saat halaman load
@@ -26,7 +27,7 @@ export default function SearchPage() {
 
   // Filter setiap kali query berubah
   useEffect(() => {
-    const result = allProducts.filter((product) =>
+    const result = allProducts.filter((product: Product) =>
       product.title.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredProducts(result);
