@@ -1,9 +1,9 @@
 import { Product } from "./types/product";
 
+export const revalidate = 10;
+
 async function getProducts(): Promise<{ products: Product[] }> {
-  const res = await fetch("https://dummyjson.com/products?limit=10", {
-    cache: "force-cache",
-  });
+  const res = await fetch("https://dummyjson.com/products?limit=10");
 
   return res.json();
 }

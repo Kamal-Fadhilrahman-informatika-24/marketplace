@@ -145,7 +145,56 @@ Contoh URL:
 
 Next.js menangkap parameter tersebut melalui params.
 
-9. Caching Strategy
+9. Error Boundary
+Project ini menggunakan fitur Error Boundary dari Next.js App Router.
+-Lokasi:
+app/[id]/error.tsx
+Jika terjadi error saat rendering, aplikasi tidak crash, tetapi menampilkan halaman fallback dengan opsi retry.
+
+10. Memoization (useMemo)
+Fitur search menggunakan useMemo untuk mengoptimalkan proses filtering data.
+-Lokasi:
+app/search/page.tsx
+useMemo memastikan proses filtering hanya dijalankan ulang ketika data produk atau query berubah, sehingga meningkatkan performa aplikasi.
+
+11. Incremental Static Regeneration (ISR)
+Halaman utama menggunakan ISR dengan konfigurasi:
+Ts
+export const revalidate = 10;
+Artinya halaman akan diregenerate setiap 10 detik jika ada request baru.
+ISR menggabungkan kecepatan SSG dan fleksibilitas SSR.
+
+12. Lazy Loading Eksplisit (Dynamic Import)
+Project ini mengimplementasikan lazy loading eksplisit menggunakan next/dynamic untuk memuat komponen secara dinamis.
+-Lokasi Implementasi
+app/product/[id]/page.tsx
+
+-Komponen AddToCartButton tidak di-import secara langsung, tetapi menggunakan dynamic import:
+import dynamic from "next/dynamic";
+
+const AddToCartButton = dynamic(
+  () => import("./AddToCartButton"),
+  {
+    loading: () => <p>Loading Button...</p>,
+  }
+);
+
+-Konsep
+Dynamic import memungkinkan komponen dimuat hanya ketika diperlukan, bukan saat initial bundle aplikasi dimuat.
+Hal ini memberikan keuntungan:
+Mengurangi ukuran initial JavaScript bundle
+Meningkatkan performa loading awal
+Menerapkan code splitting secara eksplisit
+-Kenapa Digunakan pada Halaman Product?
+Komponen AddToCartButton merupakan komponen interaktif berbasis client-side.
+Dengan lazy loading:
+Komponen tidak langsung dikirim dalam bundle utama
+Komponen hanya dimuat ketika halaman detail produk diakses
+-Perbedaan dengan Code Splitting Otomatis
+Next.js secara otomatis melakukan route-based code splitting.
+Namun pada project ini juga diterapkan explicit code splitting menggunakan next/dynamic untuk menunjukkan kontrol performa yang lebih spesifik.
+
+1. Caching Strategy
 Project ini menerapkan dua strategi caching:
 Halaman = Home, Detail
 Strategi = force-cache 

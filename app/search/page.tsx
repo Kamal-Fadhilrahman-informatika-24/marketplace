@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Product } from "../types/product";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch sekali saat halaman load
@@ -25,13 +24,12 @@ export default function SearchPage() {
     fetchProducts();
   }, []);
 
-  // Filter setiap kali query berubah
-  useEffect(() => {
-    const result = allProducts.filter((product: Product) =>
+  // 🔥 Memoized filtering
+  const filteredProducts = useMemo(() => {
+    return allProducts.filter((product) =>
       product.title.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredProducts(result);
-  }, [query, allProducts]);
+  }, [allProducts, query]);
 
   return (
     <main style={{ padding: 20 }}>
