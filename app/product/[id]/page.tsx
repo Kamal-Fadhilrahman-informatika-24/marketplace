@@ -1,4 +1,3 @@
-import FavoriteButton from "./FavoriteButton";
 import Link from "next/link";
 import { Suspense } from "react";
 import ProductInfo from "./ProductInfo";
