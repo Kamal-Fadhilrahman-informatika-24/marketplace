@@ -1,25 +1,24 @@
 "use client";
 
-import { useContext } from "react";
 import Link from "next/link";
-import { useCart } from "../context/CartContext";
+import { useFavorite } from "../context/FavoriteContext";
 
-export default function CartPage() {
-  const { cart, removeFromCart } = useCart();
+export default function FavoritePage() {
+  const { favorites, removeFromFavorite } = useFavorite();
 
   return (
     <main className="max-w-5xl mx-auto p-10">
-      <h1 className="text-4xl font-extrabold text-yellow-300 mb-10">
-        🛒 Your Cart
+      <h1 className="text-4xl font-extrabold text-pink-300 mb-10">
+        ❤️ Your Favorite Products
       </h1>
 
-      {cart.length === 0 ? (
+      {favorites.length === 0 ? (
         <p className="text-white text-lg">
-          Cart masih kosong.
+          Belum ada produk favorit.
         </p>
       ) : (
         <div className="space-y-6">
-          {cart.map((item) => (
+          {favorites.map((item) => (
             <div
               key={item.id}
               className="bg-white text-gray-900 p-6 rounded-2xl shadow-2xl flex justify-between items-center"
@@ -32,7 +31,7 @@ export default function CartPage() {
               </div>
 
               <button
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => removeFromFavorite(item.id)}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full font-bold transition"
               >
                 ❌ Remove

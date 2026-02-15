@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 import { CartProvider } from "./context/CartContext";
+import { FavoriteProvider } from "./context/FavoriteContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,12 +29,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-  className={`${geistSans.variable} ${geistMono.variable} antialiased`}
->
+      <body className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 min-h-screen text-white">
   <CartProvider>
+  <FavoriteProvider>
+    <Navbar />
     {children}
-  </CartProvider>
+  </FavoriteProvider>
+</CartProvider>
 </body>
     </html>
   );

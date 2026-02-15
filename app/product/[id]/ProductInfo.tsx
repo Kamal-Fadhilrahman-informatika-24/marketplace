@@ -1,8 +1,9 @@
 import dynamic from "next/dynamic";
 import { Product } from "@/app/types/product";
+import FavoriteButton from "./FavoriteButton";
 
 const AddToCartButton = dynamic(
-  () => import("./AddToCartButton"),
+  () => import("../../components/AddToCartButton"),
   {
     loading: () => <p>Loading Button...</p>,
   }
@@ -36,6 +37,7 @@ export default async function ProductInfo({ id }: { id: string }) {
       <p><b>Price:</b> ${product.price}</p>
 
       <AddToCartButton product={product} />
+      <FavoriteButton product={product} />
     </>
   );
 }

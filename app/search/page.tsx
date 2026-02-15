@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { Product } from "../types/product";
+import Link from "next/link";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -31,27 +32,51 @@ export default function SearchPage() {
     );
   }, [allProducts, query]);
 
-  return (
-    <main style={{ padding: 20 }}>
-      <h1>Search Product (CSR)</h1>
+ return (
+  <main className="p-10">
+    <h1 className="text-4xl font-extrabold text-yellow-300 mb-10">
+      🔍 Search Product (CSR)
+    </h1>
 
-      <input
-        type="text"
-        placeholder="Cari produk..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        style={{ padding: 8, marginRight: 10 }}
-      />
+    {/* Input Search */}
+    <input
+      type="text"
+      placeholder="Cari produk..."
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      className="w-full max-w-lg px-5 py-3 rounded-full text-black font-semibold focus:ring-4 focus:ring-yellow-400 outline-none"
+    />
 
-      {loading && <p>Loading...</p>}
+    {loading && (
+      <p className="mt-6 text-lg font-semibold animate-pulse">
+        Loading...
+      </p>
+    )}
 
-      <div style={{ marginTop: 20 }}>
-        {filteredProducts.map((product) => (
-          <div key={product.id}>
+    {/* Hasil Search */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+      {filteredProducts.map((product) => (
+        <div
+  key={product.id}
+  className="bg-white text-gray-900 rounded-2xl p-6 shadow-2xl transform hover:scale-105 transition-transform duration-300 ease-in-out"
+>
+          <h3 className="text-xl font-bold mb-3">
             {product.title}
-          </div>
-        ))}
-      </div>
-    </main>
-  );
+          </h3>
+
+          <p className="text-pink-600 font-extrabold text-lg mb-4">
+            ${product.price}
+          </p>
+
+          <Link
+            href={`/product/${product.id}`}
+            className="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white px-5 py-2 rounded-full font-semibold hover:opacity-90 transition"
+          >
+            View Detail
+          </Link>
+        </div>
+      ))}
+    </div>
+  </main>
+);
 }
