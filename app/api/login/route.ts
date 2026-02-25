@@ -15,7 +15,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: false });
 
-  } catch () {
+  } catch (error) {
+    console.error("Login error:", error);
     return NextResponse.json(
       { success: false, message: "Server error" },
       { status: 500 }
