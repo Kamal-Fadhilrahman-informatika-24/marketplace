@@ -6,7 +6,7 @@ export async function POST(request: Request) {
     const { email, password } = body;
 
     // 🔥 Hardcoded Admin Account
-    const ADMIN_EMAIL = "admin";
+    const ADMIN_EMAIL = "admin@gmail";
     const ADMIN_PASSWORD = "123";
 
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
