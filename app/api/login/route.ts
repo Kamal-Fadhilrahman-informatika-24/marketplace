@@ -1,19 +1,24 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { RowDataPacket } from "mysql2";
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  const { email, password } = body;
+  try {
+    const body = await request.json();
+    const { email, password } = body;
 
- const [rows] = await db.query<RowDataPacket[]>(
-  "SELECT * FROM admins WHERE email = ? AND password = ?",
-  [email, password]
-);
+    // 🔥 Hardcoded Admin Account
+    const ADMIN_EMAIL = "admin@gmail.com";
+    const ADMIN_PASSWORD = "123456";
 
-  if (rows.length > 0) {
-    return NextResponse.json({ success: true });
-  } else {
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      return NextResponse.json({ success: true });
+    }
+
     return NextResponse.json({ success: false });
+
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: "Server error" },
+      { status: 500 }
+    );
   }
 }
